@@ -1,0 +1,3 @@
+# Normaliza finales de linea: LF en el repositorio y en el working tree.
+# Evita que el mismo archivo aparezca como modificado al abrirlo en Windows.
+* text=auto eol=lf
