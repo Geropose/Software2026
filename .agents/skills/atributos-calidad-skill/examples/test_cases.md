@@ -1,126 +1,116 @@
-# Casos de Prueba y Ejemplos de Validación (TP3)
+# Ejemplos y Casos de Prueba (TP3)
 
-Este documento reúne las validaciones realizadas sobre la skill utilizando los enunciados y ejercicios prácticos del **Trabajo Práctico N° 3 de Diseño de Sistemas de Software (UNICEN)**.
+Acá tenés resueltos algunos de los ejercicios del **TP3 de Diseño de Sistemas (UNICEN)**, para que veas cómo la skill agarra requerimientos vagos y los convierte en cosas concretas.
 
 ---
 
-## Ejercicio 2.a: Cajero Automático (Usabilidad)
+## Ejercicio 2.a: El Cajero Automático (Usabilidad)
 
-### Enunciado original:
+### Lo que nos piden (original):
 > *"Un sistema de cajero automático debe ser fácil de usar por una persona mayor."*
 
-### Diagnóstico de elementos del SEI:
-- **Atributo identificado:** Usabilidad (facilidad de operación y accesibilidad).
+### Diagnosticando el problema:
+- **De qué hablamos:** Usabilidad (que sea fácil y accesible).
 
-| Elemento SEI | Estado | Observación |
+| Parte SEI | ¿Cómo viene? | Comentario |
 | :--- | :---: | :--- |
-| **Fuente** | [Presente] | Adulto mayor (usuario con poca familiaridad tecnológica o limitaciones visuales). |
-| **Estímulo** | [Ambiguo] | "Usar el cajero" es vago; conviene delimitar la tarea más frecuente (extracción de dinero). |
-| **Artefacto** | [Presente] | Interfaz de usuario del cajero (pantalla táctil, guía de audio, teclado). |
-| **Ambiente** | [Faltante] | No se detalla el entorno de operación (horario de atención habitual, sucursal bancaria). |
-| **Respuesta** | [Ambiguo] | "Fácil de usar" es una apreciación subjetiva; se necesita describir qué hace la interfaz (instrucciones paso a paso, alto contraste, audio-guía). |
-| **Medida de Respuesta** | [Faltante] | No hay ningún parámetro medible de tiempo ni de tasa de éxito. |
+| **Fuente** | [OK] | Es una persona mayor (probablemente se lleve mal con la tecnología o no vea bien). |
+| **Estímulo** | [Flojo] | "Usar el cajero" no dice mucho. Vamos a enfocarnos en sacar plata, que es lo típico. |
+| **Artefacto** | [OK] | La interfaz del cajero (pantalla táctil, botones físicos, parlantes). |
+| **Ambiente** | [Falta] | No nos dicen si es de noche, con mucha gente atrás, etc. |
+| **Respuesta** | [Flojo] | "Fácil de usar" es súper subjetivo. Hay que explicar qué tiene que hacer la pantalla para que sea fácil. |
+| **Medida** | [Falta] | Cero métricas. No hay límite de tiempo ni porcentaje de errores. |
 
-### Justificación de métricas propuestas (Straw Man):
-Tomando como base las tareas habituales en cajeros, se fija como tarea de referencia una extracción estándar de efectivo. Para evaluar usabilidad de forma cuantitativa, se proponen dos métricas observables: tiempo total de transacción menor a 90 segundos y una tasa de éxito de al menos el 95% en usuarios mayores de 65 años sin asistencia presencial.
+### Tirando un *Straw Man* (Propuesta):
+Para dejar de hablar en el aire, vamos a poner un límite: una extracción típica tiene que resolverse en menos de 90 segundos. Además, vamos a pedir que el 95% de las veces la persona lo logre sin tener que pedirle ayuda al de seguridad del banco.
 
-### Escenario refinado de 6 partes:
+### El Escenario Armado (6 partes):
 - **Atributo de Calidad:** Usabilidad
-- **Fuente del Estímulo:** Persona mayor de 65 años sin capacitación previa en el sistema.
-- **Estímulo:** Solicita realizar una extracción de efectivo a través de la pantalla táctil.
-- **Artefacto:** Interfaz de usuario (pantalla, sistema de audio y teclado numérico) del cajero automático.
-- **Ambiente:** Operación regular durante horario diurno en una sucursal bancaria concurrida.
-- **Respuesta:** El sistema despliega una pantalla con tipografía aumentada de alto contraste, ofrece soporte de audio paso a paso y confirma explícitamente el monto antes de expender los billetes.
-- **Medida de Respuesta:** El usuario concreta la extracción en menos de **90 segundos**, con una tasa de errores de navegación inferior al **3%** y sin necesidad de recurrir a la ayuda del personal del banco.
+- **Fuente del Estímulo:** Persona mayor de 65 años que nunca usó este cajero.
+- **Estímulo:** Intenta sacar plata usando la pantalla táctil.
+- **Artefacto:** La interfaz completa del cajero.
+- **Ambiente:** Horario de banco, sucursal concurrida (hay ruido y presión).
+- **Respuesta:** El cajero muestra letras gigantes con mucho contraste, tira indicaciones por audio, y le pide confirmar el número final antes de escupir los billetes.
+- **Medida de Respuesta:** Termina el trámite en menos de **90 segundos**, se equivoca de botón menos del **3%** de las veces y, lo más importante, no pide ayuda externa.
 
-> **Resumen narrativo:** Un usuario mayor de 65 años sin entrenamiento previo realiza una extracción de dinero en el cajero durante el horario habitual; la interfaz lo orienta con texto ampliado y confirmaciones sonoras, completando la operación en menos de 90 segundos y con menos del 3% de fallas en la selección de opciones.
+> **En resumen:** Una persona mayor sin experiencia intenta sacar plata en un cajero lleno de gente; la interfaz lo lleva de la mano con letras grandes y audio, logrando que termine en menos de 90 segundos y casi sin equivocarse.
 
 ---
 
-## Ejercicio 2.b: Procesador de Texto (Disponibilidad / Tolerancia a Fallas)
+## Ejercicio 2.b: El Procesador de Texto (Disponibilidad / Tolerancia a fallas)
 
-### Enunciado original:
+### Lo que nos piden (original):
 > *"Se desea desarrollar un procesador de texto que sea tolerante a fallas, particularmente en casos de errores al hacer el rendering (pre-visualización) de un documento previamente a su impresión."*
 
-### Diagnóstico de elementos del SEI:
-- **Atributo identificado:** Disponibilidad (Tolerancia a fallas local en cliente).
+### Diagnosticando el problema:
+- **De qué hablamos:** Disponibilidad (qué pasa cuando el programa explota localmente).
 
-| Elemento SEI | Estado | Observación |
+| Parte SEI | ¿Cómo viene? | Comentario |
 | :--- | :---: | :--- |
-| **Fuente** | [Presente] | Falla originada en el motor gráfico de renderizado o en el controlador de previsualización. |
-| **Estímulo** | [Presente] | Excepción no controlada o cuelgue durante la pre-visualización de un archivo con elementos complejos. |
-| **Artefacto** | [Presente] | Módulo de rendering / previsualización del procesador de texto. |
-| **Ambiente** | [Presente] | Sesión de edición activa con cambios recientes aún no guardados en disco. |
-| **Respuesta** | [Ambiguo] | Indica "tolerante a fallas", pero no aclara cómo debe reaccionar la aplicación (aislar el proceso de render, notificar al usuario sin cerrar el editor principal). |
-| **Medida de Respuesta** | [Faltante] | Falta establecer el tiempo de recuperación y asegurar que no haya pérdida de texto. |
+| **Fuente** | [OK] | El motor gráfico que renderiza la hoja. |
+| **Estímulo** | [OK] | Falla crítica al tratar de mostrar un archivo pesado. |
+| **Artefacto** | [OK] | El módulo de previsualización. |
+| **Ambiente** | [OK] | Estamos editando y no guardamos los cambios. |
+| **Respuesta** | [Flojo] | "Tolerante a fallas"... ¿pero cómo reacciona? ¿se cierra todo y me recupera el archivo o aísla la ventana? |
+| **Medida** | [Falta] | Falta decir en cuánto tiempo te devuelve el control y asegurar que no perdés tu trabajo. |
 
-### Justificación de métricas propuestas (Straw Man):
-Se asume que la previsualización corre en un proceso o hilo separado del editor de texto. De esta forma, si el renderizado crashea, el proceso principal captura la falla, mantiene el documento intacto (0% de pérdida de datos) y restablece el control al usuario en menos de 1 segundo.
+### Tirando un *Straw Man* (Propuesta):
+Vamos a suponer que la vista previa corre en otro hilo. Si se clava el renderizado, matamos ese proceso pero el editor sigue vivo. El objetivo: cero pérdida del texto que estabas escribiendo y menos de 1 segundo para seguir tecleando.
 
-### Escenario refinado de 6 partes:
+### El Escenario Armado (6 partes):
 - **Atributo de Calidad:** Disponibilidad (Tolerancia a fallas)
-- **Fuente del Estímulo:** Motor de renderizado de fuentes/gráficos.
-- **Estímulo:** Error crítico no capturado al renderizar la vista previa de un documento con tablas y estilos complejos.
-- **Artefacto:** Componente de previsualización e impresión.
-- **Ambiente:** Edición activa en primer plano, con modificaciones en memoria pendientes de guardado.
-- **Respuesta:** El procesador detecta la caída del proceso hijo de rendering, lo finaliza de forma controlada, preserva el documento activo sin interrupciones y muestra un mensaje explicativo ofreciendo reintentar o imprimir en modo texto plano.
-- **Medida de Respuesta:** El editor principal retoma el control del cursor en menos de **800 ms**, con **0% de pérdida de texto o formato** del archivo en memoria.
-
-> **Resumen narrativo:** Durante la edición de un documento con cambios sin guardar, se produce un error crítico en el motor de previsualización de impresión; la aplicación aísla el fallo, preserva el contenido íntegro del documento y devuelve el control al usuario en menos de 800 ms mostrando un aviso no bloqueante.
+- **Fuente del Estímulo:** El motor de renderizado.
+- **Estímulo:** Excepción fatal al renderizar la vista previa de un documento re complejo.
+- **Artefacto:** Componente de previsualización para impresión.
+- **Ambiente:** Edición intensa, con muchos cambios en memoria sin guardar.
+- **Respuesta:** El programa se da cuenta que el hijo colapsó, lo mata limpiamente, no toca el documento principal y te tira un cartel avisando que no se pudo cargar la vista previa.
+- **Medida de Respuesta:** Volvés a poder escribir en menos de 800 ms, con un 0% de pérdida de tu texto y formato.
 
 ---
 
-## Ejercicio 3: Árbol de Utilidad - Sistema de Monopatines Eléctricos
+## Ejercicio 3: Los Monopatines Eléctricos (Árbol de Utilidad)
 
-### Contexto:
-El sistema gestiona una flota de monopatines distribuidos en paradas urbanas. Los usuarios consultan el mapa desde la app, destraban el vehículo escaneando un código QR con saldo prepago (Mercado Pago), realizan el trayecto con opción de pausas de 15 minutos y finalizan el viaje en una parada habilitada. Los administradores controlan la flota, tarifas y mantenimiento desde una consola web.
+### De qué va:
+Es un sistema para alquilar monopatines en la calle. Desbloqueás con QR pagando con Mercado Pago, podés pausar el viaje, y los admins controlan todo desde una web. 
 
-### Árbol de Utilidad y Priorización:
+### El Árbol (con sus prioridades):
 
 ```text
 Utilidad
 ├── Rendimiento
-│   ├── Validación de código QR ────────────── (H, H) [Driver 1]
-│   └── Actualización de mapa y flota ──────── (H, M)
+│   ├── Escanear el QR y arrancar ──────────── (H, H) [Driver 1]
+│   └── Ver todos los monopatines en el mapa ─ (H, M)
 ├── Disponibilidad
-│   ├── Pérdida de cobertura GPS/celular ──── (H, H) [Driver 2]
-│   └── Caída de nodos de backend ─────────── (H, M)
+│   ├── Andar por zonas sin señal 4G ───────── (H, H) [Driver 2]
+│   └── Se nos cae un server del backend ───── (H, M)
 ├── Seguridad
-│   ├── Cobros e integración con Mercado Pago  (H, H) [Driver 3]
-│   └── Control de permisos administrativos ── (M, L)
+│   ├── Cobrar y validar plata ─────────────── (H, H) [Driver 3]
+│   └── Que un user común no cambie tarifas ── (M, L)
 ├── Usabilidad
-│   ├── Validación de parada de entrega ────── (H, M)
-│   └── Indicación visual de tiempo de pausa ─ (M, L)
+│   ├── Intentar dejarlo donde no se puede ─── (H, M)
+│   └── El botón de pausar el viaje ────────── (M, L)
 ├── Interoperabilidad
-│   ├── Recepción de telemetría IoT ────────── (H, H) [Driver 4]
-│   └── Conciliación con pasarela de pagos ─── (H, M)
+│   ├── Recibir datos de toda la flota IoT ─── (H, H) [Driver 4]
+│   └── Recibir el Ok de pago de MP ────────── (H, M)
 └── Modificabilidad
-    └── Ajuste en las reglas de tarificación ─ (M, M)
+    └── Cambiar los precios el finde ───────── (M, M)
 ```
 
----
+### Tabla de Escenarios (Resumen rápido):
 
-### Tabla de Escenarios del Sistema:
-
-| ID | Atributo | Sub-factor | Prioridad (Imp, Dif) | Escenario de Calidad |
+| ID | Atributo | Qué medimos | Prioridad | Requerimiento en criollo |
 | :---: | :--- | :--- | :---: | :--- |
-| **E-01** | **Rendimiento** | Activación QR | **(H, H)** | Un usuario escanea el QR de un monopatín disponible en hora pico; el backend valida el saldo del usuario e instruye destrabar el candado en menos de **1.5 segundos**. |
-| **E-02** | **Rendimiento** | Mapa de Flota | **(H, M)** | Un usuario abre la app en una zona céntrica; la aplicación consulta la API y ubica los monopatines en un radio de 1 km en menos de **2 segundos** con conexión 4G estándar. |
-| **E-03** | **Disponibilidad** | Desconexión GPS | **(H, H)** | Un monopatín transita por una zona sin cobertura celular; el controlador almacena la odometría y tiempos en memoria no volátil, sincronizando los datos con el servidor en menos de **5 segundos** una vez restablecida la señal sin perder kilómetros recorridos. |
-| **E-04** | **Disponibilidad** | Caída de Servidor | **(H, M)** | Se produce la falla de una instancia del servicio de viajes; las demás instancias activas asumen las conexiones en menos de **10 segundos** manteniendo una disponibilidad global del servicio superior al **99.9%** mensual. |
-| **E-05** | **Seguridad** | Transacciones de Pago | **(H, H)** | Un intento de fraude altera los montos de una petición de pago; el servicio verifica la firma digital del token con Mercado Pago, rechaza la transacción de forma inmediata e inserta un registro en la tabla de auditoría en menos de **150 ms**. |
-| **E-06** | **Seguridad** | Consola Admin | **(M, L)** | Un usuario sin rol de administrador intenta invocar las APIs de modificación de tarifas; el servicio valida los permisos del token JWT y deniega el acceso en menos de **50 ms**. |
-| **E-07** | **Usabilidad** | Finalización de Viaje | **(H, M)** | El usuario intenta dar por terminado el viaje fuera del perímetro de una parada permitida; la app lo alerta en menos de **1 segundo**, señalando en el mapa la parada autorizada más próxima. |
-| **E-08** | **Usabilidad** | Pausa de Alquiler | **(M, L)** | El usuario presiona el botón de pausa; el monopatín bloquea el acelerador y la app muestra un contador visible de 15 minutos emitiendo un aviso antes de reanudar el cobro de la tarifa regular. |
-| **E-09** | **Interoperabilidad** | Telemetría IoT | **(H, H)** | Los monopatines envían paquetes periódicos de estado y batería vía protocolo liviano (MQTT); el broker de ingesta procesa y normaliza los mensajes con una latencia inferior a **300 ms** y cero descarte de paquetes válidos. |
-| **E-10** | **Interoperabilidad** | Notificación Webhook | **(H, M)** | La pasarela de Mercado Pago envía un webhook de cobro confirmado; el adaptador de integración procesa el evento y acredita el viaje en menos de **500 ms**. |
-| **E-11** | **Modificabilidad** | Reglas de Tarifas | **(M, M)** | El área de operaciones solicita modificar el esquema tarifario agregando un costo diferenciado para fines de semana; el cambio se implementa y prueba en la capa de negocio en menos de **2 días-persona** sin alterar el firmware del monopatín ni la app de los usuarios. |
+| **E-01** | **Rendimiento** | QR al instante | **(H, H)** | Escaneás el QR en pleno centro y el candado hace *clac* en menos de 1.5 segs. |
+| **E-02** | **Rendimiento** | Mapa rápido | **(H, M)** | Abrís la app y te carga todos los monopatines cerca en **< 2 segs** (con 4G normal). |
+| **E-03** | **Disponibilidad** | Viaje sin internet | **(H, H)** | Si te metés en un túnel sin señal, el monopatín guarda los metros recorridos y los sincroniza en menos de 5 segs apenas agarra señal, sin perder cobros. |
+| **E-05** | **Seguridad** | Pagos blindados | **(H, H)** | Si alguien toquetea la petición HTTP para viajar gratis, la API rechaza el pago al toque y levanta la bandera en menos de 150 ms. |
+| **E-09** | **Interoperab.** | Telemetría masiva | **(H, H)** | Cientos de monopatines mandando su batería a la vez por MQTT. El sistema lo digiere en menos de 300 ms sin perder paquetes. |
+| **E-11** | **Modificab.** | Cambiar precios | **(M, M)** | Negocio pide que los findes sea más caro; los devs lo programan y testean en menos de 2 días sin tener que actualizar la app en los celulares. |
 
----
+### ¿Por qué estos son los "Architectural Drivers" (H, H)?
 
-### Justificación de los Architectural Drivers `(H, H)`:
+1. **E-01 (Candado veloz):** Nadie va a quedarse parado 10 segundos esperando que destrabe el monopatín. Te obliga a usar bases de datos súper rápidas (como Redis) y tener conexiones persistentes con el hardware.
+2. **E-03 (Zonas sin señal):** Si la app se vuelve loca sin internet, regalás viajes. Esto obliga a pensar una arquitectura *offline-first* tanto en el monopatín como en la app móvil.
+3. **E-05 (Seguridad con plata):** Un bug acá y la empresa quiebra. Condiciona todo: obliga a usar certificados estrictos, un buen API Gateway y logs de auditoría imposibles de borrar.
+4. **E-09 (Avalancha de datos IoT):** No podés mandar los datos de mil monopatines directo a una base SQL porque explota. Te obliga a meter un broker de mensajes en el medio (como RabbitMQ o Kafka) para aguantar los picos.
 
-1. **E-01 (Activación QR rápida):** Es fundamental para la experiencia del usuario (nadie quiere esperar 5 segundos al lado del monopatín para arrancar). Requiere mantener sesiones en caché rápida (ej. Redis) y una comunicación ágil con el hardware del vehículo.
-2. **E-03 (Tolerancia a pérdida de conectividad):** En una ciudad hay sombras de cobertura celular. Si el monopatín no guarda el recorrido localmente, se pierden cobros o se cobra de más al cliente. Exige que el firmware del monopatín funcione con un esquema offline-first.
-3. **E-05 (Seguridad en pagos):** Un fallo de seguridad en la validación de tokens de pago provocaría pérdidas económicas directas y riesgo de fraude masivo. Condiciona el uso de HTTPS estricto, API Gateway con validación de firmas y registro de auditoría inmutable.
-4. **E-09 (Ingesta de telemetría IoT de toda la flota):** Con cientos de monopatines enviando coordenadas de forma concurrente, el backend debe soportar una tasa alta de mensajes concurrentes sin colapsar, lo que sugiere una arquitectura basada en colas o brokers de mensajería.
