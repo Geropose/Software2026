@@ -35,6 +35,35 @@ Tomando como base las tareas habituales en cajeros, se fija como tarea de refere
 
 > **Resumen narrativo:** Un usuario mayor de 65 años sin entrenamiento previo realiza una extracción de dinero en el cajero durante el horario habitual; la interfaz lo orienta con texto ampliado y confirmaciones sonoras, completando la operación en menos de 90 segundos y con menos del 3% de fallas en la selección de opciones.
 
+---
+
+## Ejercicio 3: Árbol de Utilidad - Sistema de Monopatines Eléctricos
+
+### Contexto:
+El sistema gestiona una flota de monopatines distribuidos en paradas urbanas. Los usuarios consultan el mapa desde la app, destraban el vehículo escaneando un código QR con saldo prepago (Mercado Pago), realizan el trayecto con opción de pausas de 15 minutos y finalizan el viaje en una parada habilitada. Los administradores controlan la flota, tarifas y mantenimiento desde una consola web.
+
+### Árbol de Utilidad y Priorización:
+
+```text
+Utilidad
+├── Rendimiento
+│   ├── Validación de código QR ────────────── (H, H) [Driver 1]
+│   └── Actualización de mapa y flota ──────── (H, M)
+├── Disponibilidad
+│   ├── Pérdida de cobertura GPS/celular ──── (H, H) [Driver 2]
+│   └── Caída de nodos de backend ─────────── (H, M)
+├── Seguridad
+│   ├── Cobros e integración con Mercado Pago  (H, H) [Driver 3]
+│   └── Control de permisos administrativos ── (M, L)
+├── Usabilidad
+│   ├── Validación de parada de entrega ────── (H, M)
+│   └── Indicación visual de tiempo de pausa ─ (M, L)
+├── Interoperabilidad
+│   ├── Recepción de telemetría IoT ────────── (H, H) [Driver 4]
+│   └── Conciliación con pasarela de pagos ─── (H, M)
+└── Modificabilidad
+    └── Ajuste en las reglas de tarificación ─ (M, M)
+```
 
 ---
 
