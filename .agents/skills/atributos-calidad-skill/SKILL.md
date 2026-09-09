@@ -46,3 +46,28 @@ Cuando se pida formular o refinar un requerimiento de calidad en un escenario fo
 - Se pueden consultar valores y métricas de referencia en `references/sei_qa_templates.md`.
 
 ---
+
+
+## Modo 3: Árbol de Utilidad (Utility Tree) y Priorización
+
+Al analizar un caso de estudio o sistema completo:
+
+1. **Definir la raíz:** `Utilidad` global del sistema.
+2. **Nivel 1 (Atributos):** Seleccionar los atributos de calidad relevantes para el caso de estudio (usualmente entre 4 y 6).
+3. **Nivel 2 (Sub-factores):** Dividir cada atributo en categorías o focos de interés específicos.
+4. **Nivel 3 (Escenarios refinados):** Especificar escenarios concretos y medibles para las hojas del árbol.
+5. **Priorizar con la tupla `(Importancia para el negocio, Dificultad técnica)`:**
+   - Asignar a cada escenario una calificación en escala `High (H)`, `Medium (M)`, `Low (L)` para ambas dimensiones: `(H/M/L, H/M/L)`.
+   - Identificar los escenarios con prioridad `(H, H)` como los **Architectural Drivers** que condicionan las principales decisiones y tácticas de diseño.
+
+### Formato de salida:
+- **Árbol estructurado:** Presentación jerárquica en texto indentado o diagrama Mermaid.
+- **Tabla de escenarios:** Detalle de cada escenario con su ID, atributo, sub-factor, tupla `(Imp, Dif)` y enunciado medible.
+- **Análisis de drivers `(H, H)`:** Breve fundamentación del impacto de cada driver sobre la arquitectura del sistema.
+
+---
+
+## Archivos de Referencia
+- **`references/sei_qa_templates.md`:** Resumen de opciones y métricas típicas por atributo según Bass et al.
+- **`references/utility_tree_guide.md`:** Criterios y ejemplos prácticos para el armado del árbol de utilidad.
+- **`examples/test_cases.md`:** Pruebas y validaciones con los ejercicios del TP3.
