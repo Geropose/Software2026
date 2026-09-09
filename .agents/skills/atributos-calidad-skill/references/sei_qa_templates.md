@@ -51,17 +51,18 @@ Un escenario de calidad según el SEI formaliza un requerimiento no funcional en
 
 ---
 
-### C. Modificabilidad (Modifiability)
-*Facilidad con la que el sistema puede ser modificado para incorporar cambios, corregir errores o adaptarse a nuevas plataformas.*
+### 3. Modificabilidad (Modifiability)
+*Foco: Capacidad de realizar cambios en el sistema minimizando el costo, el tiempo de desarrollo y el riesgo de regresiones.*
 
-| Parte | Valores Típicos / Opciones |
-| :--- | :--- |
-| **Fuente** | Desarrollador, arquitecto, administrador del sistema, integrador de terceros. |
-| **Estímulo** | Solicitud de cambio: agregar una nueva regla de negocio, cambiar un proveedor de base de datos, soportar un nuevo protocolo/API, refactorizar un módulo. |
-| **Artefacto** | Código fuente, configuración, esquema de BD, interfaz de usuario, capa de persistencia. |
-| **Ambiente** | Tiempo de diseño, tiempo de desarrollo, tiempo de compilación/empaquetado, tiempo de despliegue, tiempo de ejecución. |
-| **Respuesta** | Implementar el cambio, verificar que no rompe funcionalidad existente (regresión), desplegar la nueva versión. |
-| **Medida de Respuesta** | Costo en horas/días-persona, número de archivos/módulos modificados (acoplamiento), tiempo de compilación y testeo, costo monetario. |
+- **Fuentes:** Desarrollador del equipo, arquitecto, cambio en regulaciones o reglas de negocio del cliente.
+- **Estímulos:** Incorporación de nueva pasarela de cobro, cambio en el cálculo de tarifas, reemplazo de motor de base de datos, soporte de nuevo formato de exportación.
+- **Artefactos:** Módulos de lógica de negocio, adaptadores externos, esquemas de persistencia, frontend.
+- **Ambientes:** Tiempo de desarrollo, ciclo de release, tiempo de diseño.
+- **Respuestas:** Implementación del cambio, ejecución de tests unitarios/integración, compilación y despliegue sin afectar módulos adyacentes.
+- **Medidas de respuesta:**
+  - Esfuerzo de desarrollo (ej. < 2 días-persona).
+  - Cantidad de módulos o archivos modificados (ej. únicamente el adaptador sin tocar el core de dominio).
+  - Tiempo de compilación y pasaje de tests (< 15 minutos).
 
 ---
 
