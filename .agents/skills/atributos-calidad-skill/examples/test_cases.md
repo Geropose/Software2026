@@ -34,3 +34,31 @@ Tomando como base las tareas habituales en cajeros, se fija como tarea de refere
 - **Medida de Respuesta:** El usuario concreta la extracción en menos de **90 segundos**, con una tasa de errores de navegación inferior al **3%** y sin necesidad de recurrir a la ayuda del personal del banco.
 
 > **Resumen narrativo:** Un usuario mayor de 65 años sin entrenamiento previo realiza una extracción de dinero en el cajero durante el horario habitual; la interfaz lo orienta con texto ampliado y confirmaciones sonoras, completando la operación en menos de 90 segundos y con menos del 3% de fallas en la selección de opciones.
+
+
+---
+
+### Tabla de Escenarios del Sistema:
+
+| ID | Atributo | Sub-factor | Prioridad (Imp, Dif) | Escenario de Calidad |
+| :---: | :--- | :--- | :---: | :--- |
+| **E-01** | **Rendimiento** | Activación QR | **(H, H)** | Un usuario escanea el QR de un monopatín disponible en hora pico; el backend valida el saldo del usuario e instruye destrabar el candado en menos de **1.5 segundos**. |
+| **E-02** | **Rendimiento** | Mapa de Flota | **(H, M)** | Un usuario abre la app en una zona céntrica; la aplicación consulta la API y ubica los monopatines en un radio de 1 km en menos de **2 segundos** con conexión 4G estándar. |
+| **E-03** | **Disponibilidad** | Desconexión GPS | **(H, H)** | Un monopatín transita por una zona sin cobertura celular; el controlador almacena la odometría y tiempos en memoria no volátil, sincronizando los datos con el servidor en menos de **5 segundos** una vez restablecida la señal sin perder kilómetros recorridos. |
+| **E-04** | **Disponibilidad** | Caída de Servidor | **(H, M)** | Se produce la falla de una instancia del servicio de viajes; las demás instancias activas asumen las conexiones en menos de **10 segundos** manteniendo una disponibilidad global del servicio superior al **99.9%** mensual. |
+| **E-05** | **Seguridad** | Transacciones de Pago | **(H, H)** | Un intento de fraude altera los montos de una petición de pago; el servicio verifica la firma digital del token con Mercado Pago, rechaza la transacción de forma inmediata e inserta un registro en la tabla de auditoría en menos de **150 ms**. |
+| **E-06** | **Seguridad** | Consola Admin | **(M, L)** | Un usuario sin rol de administrador intenta invocar las APIs de modificación de tarifas; el servicio valida los permisos del token JWT y deniega el acceso en menos de **50 ms**. |
+| **E-07** | **Usabilidad** | Finalización de Viaje | **(H, M)** | El usuario intenta dar por terminado el viaje fuera del perímetro de una parada permitida; la app lo alerta en menos de **1 segundo**, señalando en el mapa la parada autorizada más próxima. |
+| **E-08** | **Usabilidad** | Pausa de Alquiler | **(M, L)** | El usuario presiona el botón de pausa; el monopatín bloquea el acelerador y la app muestra un contador visible de 15 minutos emitiendo un aviso antes de reanudar el cobro de la tarifa regular. |
+| **E-09** | **Interoperabilidad** | Telemetría IoT | **(H, H)** | Los monopatines envían paquetes periódicos de estado y batería vía protocolo liviano (MQTT); el broker de ingesta procesa y normaliza los mensajes con una latencia inferior a **300 ms** y cero descarte de paquetes válidos. |
+| **E-10** | **Interoperabilidad** | Notificación Webhook | **(H, M)** | La pasarela de Mercado Pago envía un webhook de cobro confirmado; el adaptador de integración procesa el evento y acredita el viaje en menos de **500 ms**. |
+| **E-11** | **Modificabilidad** | Reglas de Tarifas | **(M, M)** | El área de operaciones solicita modificar el esquema tarifario agregando un costo diferenciado para fines de semana; el cambio se implementa y prueba en la capa de negocio en menos de **2 días-persona** sin alterar el firmware del monopatín ni la app de los usuarios. |
+
+---
+
+### Justificación de los Architectural Drivers `(H, H)`:
+
+1. **E-01 (Activación QR rápida):** Es fundamental para la experiencia del usuario (nadie quiere esperar 5 segundos al lado del monopatín para arrancar). Requiere mantener sesiones en caché rápida (ej. Redis) y una comunicación ágil con el hardware del vehículo.
+2. **E-03 (Tolerancia a pérdida de conectividad):** En una ciudad hay sombras de cobertura celular. Si el monopatín no guarda el recorrido localmente, se pierden cobros o se cobra de más al cliente. Exige que el firmware del monopatín funcione con un esquema offline-first.
+3. **E-05 (Seguridad en pagos):** Un fallo de seguridad en la validación de tokens de pago provocaría pérdidas económicas directas y riesgo de fraude masivo. Condiciona el uso de HTTPS estricto, API Gateway con validación de firmas y registro de auditoría inmutable.
+4. **E-09 (Ingesta de telemetría IoT de toda la flota):** Con cientos de monopatines enviando coordenadas de forma concurrente, el backend debe soportar una tasa alta de mensajes concurrentes sin colapsar, lo que sugiere una arquitectura basada en colas o brokers de mensajería (tipo MQTT / RabbitMQ).
