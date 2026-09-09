@@ -47,40 +47,39 @@ Cuando se pida formular o refinar un requerimiento de calidad en un escenario fo
 
 ---
 
-## Modo 2: Chequeo, Diagnóstico y Completitud de Escenarios
+## Modo 2: Diagnóstico y Completitud de Requerimientos Incompletos
 
-Cuando se provea un requerimiento informal o un escenario preliminar ("crudo" / *raw scenario*), la skill debe ejecutar un diagnóstico de completitud y proponer el escenario completado.
+Ante un requerimiento informal, ambiguo o preliminar, la skill debe realizar un diagnóstico estructurado y proponer una versión refinada:
 
-### Proceso de Evaluación en 4 Pasos:
-1. **Identificación del Atributo de Calidad principal:** Clasificar a qué atributo pertenece (o si es un requerimiento funcional puro o una restricción de diseño).
-2. **Matriz de Chequeo de las 6 Partes:** Evaluar elemento por elemento con estado:
-   - ✅ **Presente y claro**
-   - ⚠️ **Ambiguo o incompleto**
-   - ❌ **Faltante / Ausente**
-3. **Detección de Ambigüedades y Aplicación de *Straw Man*:** Si la medida de respuesta falta o es subjetiva (ej. "el sistema debe ser rápido"), proponer una medida concreta inicial basada en *Straw Man Response Measure* (Michael Keeling) para abrir la discusión técnica.
-4. **Escenario Completo Refinado:** Presentar la versión final completa en el template de 6 partes.
+1. **Identificar el atributo de calidad principal** al que hace referencia el enunciado (o aclarar si es un requerimiento funcional puro o una restricción).
+2. **Revisar cada uno de los 6 elementos del SEI**, indicando el estado de cada parte:
+   - `[Presente]`: Definido con claridad.
+   - `[Ambiguo]`: Mencionado de forma subjetiva o vaga.
+   - `[Faltante]`: No está contemplado en el texto original.
+3. **Aplicar la técnica de Straw Man (Keeling):** Si la medida de respuesta o las condiciones del entorno están ausentes, proponer una métrica razonable y justificada para abrir la discusión técnica con los stakeholders.
+4. **Presentar el escenario refinado completo** en la plantilla de 6 partes.
 
-### Formato de Salida para Chequeo:
+### Formato de salida para diagnóstico:
 
 ```markdown
-### Diagnóstico de Escenario
-- **Enunciado Original:** "[Texto provisto]"
-- **Atributo Identificado:** [Nombre del atributo]
+### Diagnóstico de Requerimiento
+- **Texto original:** "[Texto provisto]"
+- **Atributo identificado:** [Atributo principal]
 
-| Elemento SEI | Estado | Valor Detectado / Observación |
+| Elemento SEI | Estado | Observación |
 | :--- | :---: | :--- |
-| **1. Fuente** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
-| **2. Estímulo** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
-| **3. Artefacto** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
-| **4. Ambiente** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
-| **5. Respuesta** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
-| **6. Medida de Respuesta** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
+| **Fuente** | [Presente / Ambiguo / Faltante] | [Detalle o justificación] |
+| **Estímulo** | [Presente / Ambiguo / Faltante] | [Detalle o justificación] |
+| **Artefacto** | [Presente / Ambiguo / Faltante] | [Detalle o justificación] |
+| **Ambiente** | [Presente / Ambiguo / Faltante] | [Detalle o justificación] |
+| **Respuesta** | [Presente / Ambiguo / Faltante] | [Detalle o justificación] |
+| **Medida de Respuesta** | [Presente / Ambiguo / Faltante] | [Detalle o justificación] |
 
-#### Partes Faltantes y Recomendación de Refinamiento:
-- [Explicación de qué falta y justificación de las asunciones/straw man propuestos]
+#### Justificación y propuesta de refinamiento (Straw Man):
+[Explicación de las asunciones adoptadas para completar los elementos faltantes o ambiguos]
 
-#### Escenario Completado (SEI 6 Partes):
-[Presentar el template completo con las 6 partes rellenas]
+#### Escenario Completo Refinado (SEI 6 Partes):
+[Plantilla de 6 partes con todos los campos completos]
 ```
 
 ---
@@ -107,4 +106,6 @@ Al analizar un caso de estudio o sistema completo:
 ## Archivos de Referencia
 - **`references/sei_qa_templates.md`:** Resumen de opciones y métricas típicas por atributo según Bass et al.
 - **`references/utility_tree_guide.md`:** Criterios y ejemplos prácticos para el armado del árbol de utilidad.
+- **`examples/test_cases.md`:** Pruebas y validaciones con los ejercicios del TP3.
+ity_tree_guide.md`:** Criterios y ejemplos prácticos para el armado del árbol de utilidad.
 - **`examples/test_cases.md`:** Pruebas y validaciones con los ejercicios del TP3.
