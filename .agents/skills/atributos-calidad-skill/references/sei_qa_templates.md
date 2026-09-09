@@ -32,19 +32,22 @@ Un escenario de calidad según el SEI formaliza un requerimiento no funcional en
   - Tiempo de recuperación (MTTR < 30 s).
   - Tiempo de detección de falla (< 5 s).
   - Margen de pérdida de datos (RPO = 0, no perder transacciones confirmadas).
- ---
 
-### B. Rendimiento / Performance
-*Capacidad del sistema de cumplir con restricciones de tiempo de respuesta y procesamiento ante la llegada de eventos.*
+---
 
-| Parte | Valores Típicos / Opciones |
-| :--- | :--- |
-| **Fuente** | Usuarios concurrentes, clientes móviles, sensores IoT, sistemas externos, temporizadores cron. |
-| **Estímulo** | Llegada de una petición (periódica, estocástica, en ráfaga / *burst*), ejecución de transacción, consulta masiva. |
-| **Artefacto** | Servidor web, motor de búsqueda, base de datos, pipeline de eventos, API Gateway. |
-| **Ambiente** | Operación normal, carga pico (*peak load*), condiciones de estrés, operación bajo red de baja latencia/alta latencia. |
-| **Respuesta** | Procesar la petición, calcular el resultado, persistir la transacción, encolar el evento. |
-| **Medida de Respuesta** | Latencia promedio (ej. $\le 200\text{ ms}$), percentil 95/99 (ej. $p99 \le 1.5\text{ s}$), throughput (ej. $1000\text{ req/seg}$), jitter, consumo de memoria/CPU. |
+### 2. Rendimiento (Performance)
+*Foco: Cumplir con los plazos y tiempos de procesamiento exigidos ante la llegada de eventos concurrentes.*
+
+- **Fuentes:** Usuarios interactivos desde la web/app móvil, ráfagas de telemetría IoT, procesos batch periódicos.
+- **Estímulos:** Petición HTTP de consulta/escritura, llegada de paquetes de coordenadas GPS, lectura masiva de datos.
+- **Artefactos:** API Gateway, servidor backend, capa de caché, base de datos relacional/NoSQL.
+- **Ambientes:** Carga promedio, hora pico (ej. 500 a 1.000 req/s), conectividad móvil deficiente (3G/4G).
+- **Respuestas:** Procesamiento de la petición, cálculo de ruta, almacenamiento en cola, renderizado de vista.
+- **Medidas de respuesta:**
+  - Latencia media de respuesta (ej. < 200 ms).
+  - Latencia percentil 95 o 99 (ej. p95 < 1.5 s).
+  - Throughput sostenido (ej. 800 transacciones/segundo).
+  - Tiempo total de renderizado en cliente (< 2 s).
 
 ---
 
