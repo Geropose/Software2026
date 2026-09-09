@@ -37,6 +37,39 @@ Tomando como base las tareas habituales en cajeros, se fija como tarea de refere
 
 ---
 
+## Ejercicio 2.b: Procesador de Texto (Disponibilidad / Tolerancia a Fallas)
+
+### Enunciado original:
+> *"Se desea desarrollar un procesador de texto que sea tolerante a fallas, particularmente en casos de errores al hacer el rendering (pre-visualización) de un documento previamente a su impresión."*
+
+### Diagnóstico de elementos del SEI:
+- **Atributo identificado:** Disponibilidad (Tolerancia a fallas local en cliente).
+
+| Elemento SEI | Estado | Observación |
+| :--- | :---: | :--- |
+| **Fuente** | [Presente] | Falla originada en el motor gráfico de renderizado o en el controlador de previsualización. |
+| **Estímulo** | [Presente] | Excepción no controlada o cuelgue durante la pre-visualización de un archivo con elementos complejos. |
+| **Artefacto** | [Presente] | Módulo de rendering / previsualización del procesador de texto. |
+| **Ambiente** | [Presente] | Sesión de edición activa con cambios recientes aún no guardados en disco. |
+| **Respuesta** | [Ambiguo] | Indica "tolerante a fallas", pero no aclara cómo debe reaccionar la aplicación (aislar el proceso de render, notificar al usuario sin cerrar el editor principal). |
+| **Medida de Respuesta** | [Faltante] | Falta establecer el tiempo de recuperación y asegurar que no haya pérdida de texto. |
+
+### Justificación de métricas propuestas (Straw Man):
+Se asume que la previsualización corre en un proceso o hilo separado del editor de texto. De esta forma, si el renderizado crashea, el proceso principal captura la falla, mantiene el documento intacto (0% de pérdida de datos) y restablece el control al usuario en menos de 1 segundo.
+
+### Escenario refinado de 6 partes:
+- **Atributo de Calidad:** Disponibilidad (Tolerancia a fallas)
+- **Fuente del Estímulo:** Motor de renderizado de fuentes/gráficos.
+- **Estímulo:** Error crítico no capturado al renderizar la vista previa de un documento con tablas y estilos complejos.
+- **Artefacto:** Componente de previsualización e impresión.
+- **Ambiente:** Edición activa en primer plano, con modificaciones en memoria pendientes de guardado.
+- **Respuesta:** El procesador detecta la caída del proceso hijo de rendering, lo finaliza de forma controlada, preserva el documento activo sin interrupciones y muestra un mensaje explicativo ofreciendo reintentar o imprimir en modo texto plano.
+- **Medida de Respuesta:** El editor principal retoma el control del cursor en menos de **800 ms**, con **0% de pérdida de texto o formato** del archivo en memoria.
+
+> **Resumen narrativo:** Durante la edición de un documento con cambios sin guardar, se produce un error crítico en el motor de previsualización de impresión; la aplicación aísla el fallo, preserva el contenido íntegro del documento y devuelve el control al usuario en menos de 800 ms mostrando un aviso no bloqueante.
+
+---
+
 ## Ejercicio 3: Árbol de Utilidad - Sistema de Monopatines Eléctricos
 
 ### Contexto:
@@ -90,30 +123,4 @@ Utilidad
 1. **E-01 (Activación QR rápida):** Es fundamental para la experiencia del usuario (nadie quiere esperar 5 segundos al lado del monopatín para arrancar). Requiere mantener sesiones en caché rápida (ej. Redis) y una comunicación ágil con el hardware del vehículo.
 2. **E-03 (Tolerancia a pérdida de conectividad):** En una ciudad hay sombras de cobertura celular. Si el monopatín no guarda el recorrido localmente, se pierden cobros o se cobra de más al cliente. Exige que el firmware del monopatín funcione con un esquema offline-first.
 3. **E-05 (Seguridad en pagos):** Un fallo de seguridad en la validación de tokens de pago provocaría pérdidas económicas directas y riesgo de fraude masivo. Condiciona el uso de HTTPS estricto, API Gateway con validación de firmas y registro de auditoría inmutable.
-4. **E-09 (Ingesta de telemetría IoT de toda la flota):** Con cientos de monopatines enviando coordenadas de forma concurrente, el backend debe soportar una tasa alta de mensajes concurrentes sin colapsar, lo que sugiere una arquitectura basada en colas o brokers de mensajería (tipo MQTT / RabbitMQ).
-
----
-
-## Caso de Prueba 2: Refinamiento de Tolerancia a Fallas en Rendering (Ejercicio 2b TP3)
-
-### Input al Asistente:
-> *"Se desea desarrollar un procesador de texto que sea tolerante a fallas, particularmente en casos de errores al hacer el rendering (pre-visualización) de un documento previamente a su impresión."*
-
-### Salida Generada por la Skill:
-
-#### 1. Diagnóstico de Escenario
-- **Atributo Identificado:** **Disponibilidad / Tolerancia a Fallas (Availability / Fault Tolerance)**.
-- **Partes Faltantes:** Faltaba la medida del tiempo de recuperación y preservación del documento en memoria/disco.
-
-#### 2. Escenario Completado (SEI 6 Partes):
-- **Atributo de Calidad:** Disponibilidad (Tolerancia a fallas)
-- **1. Fuente:** Motor de renderizado gráfico o plugin de impresión externo.
-- **2. Estímulo:** Se produce una excepción no controlada / crash durante la pre-visualización de un documento complejo.
-- **3. Artefacto:** Módulo de pre-visualización e impresión del procesador de texto.
-- **4. Ambiente:** Operación normal mientras el usuario tiene un documento con cambios sin guardar.
-- **5. Respuesta:** El procesador de texto aísla el proceso de renderizado en un hilo/proceso independiente, captura la falla, notifica al usuario con un mensaje comprensible y preserva la sesión de edición activa sin congelar la aplicación ni perder datos.
-- **6. Medida de Respuesta:** El proceso principal se recupera en menos de **500 milisegundos**, con **0% de pérdida de texto o formato** del documento original y permitiendo reintentar la operación.
-
----
-
-
+4. **E-09 (Ingesta de telemetría IoT de toda la flota):** Con cientos de monopatines enviando coordenadas de forma concurrente, el backend debe soportar una tasa alta de mensajes concurrentes sin colapsar, lo que sugiere una arquitectura basada en colas o brokers de mensajería.
