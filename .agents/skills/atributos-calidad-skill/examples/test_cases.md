@@ -91,3 +91,29 @@ Utilidad
 2. **E-03 (Tolerancia a pérdida de conectividad):** En una ciudad hay sombras de cobertura celular. Si el monopatín no guarda el recorrido localmente, se pierden cobros o se cobra de más al cliente. Exige que el firmware del monopatín funcione con un esquema offline-first.
 3. **E-05 (Seguridad en pagos):** Un fallo de seguridad en la validación de tokens de pago provocaría pérdidas económicas directas y riesgo de fraude masivo. Condiciona el uso de HTTPS estricto, API Gateway con validación de firmas y registro de auditoría inmutable.
 4. **E-09 (Ingesta de telemetría IoT de toda la flota):** Con cientos de monopatines enviando coordenadas de forma concurrente, el backend debe soportar una tasa alta de mensajes concurrentes sin colapsar, lo que sugiere una arquitectura basada en colas o brokers de mensajería (tipo MQTT / RabbitMQ).
+
+---
+
+## Caso de Prueba 2: Refinamiento de Tolerancia a Fallas en Rendering (Ejercicio 2b TP3)
+
+### Input al Asistente:
+> *"Se desea desarrollar un procesador de texto que sea tolerante a fallas, particularmente en casos de errores al hacer el rendering (pre-visualización) de un documento previamente a su impresión."*
+
+### Salida Generada por la Skill:
+
+#### 1. Diagnóstico de Escenario
+- **Atributo Identificado:** **Disponibilidad / Tolerancia a Fallas (Availability / Fault Tolerance)**.
+- **Partes Faltantes:** Faltaba la medida del tiempo de recuperación y preservación del documento en memoria/disco.
+
+#### 2. Escenario Completado (SEI 6 Partes):
+- **Atributo de Calidad:** Disponibilidad (Tolerancia a fallas)
+- **1. Fuente:** Motor de renderizado gráfico o plugin de impresión externo.
+- **2. Estímulo:** Se produce una excepción no controlada / crash durante la pre-visualización de un documento complejo.
+- **3. Artefacto:** Módulo de pre-visualización e impresión del procesador de texto.
+- **4. Ambiente:** Operación normal mientras el usuario tiene un documento con cambios sin guardar.
+- **5. Respuesta:** El procesador de texto aísla el proceso de renderizado en un hilo/proceso independiente, captura la falla, notifica al usuario con un mensaje comprensible y preserva la sesión de edición activa sin congelar la aplicación ni perder datos.
+- **6. Medida de Respuesta:** El proceso principal se recupera en menos de **500 milisegundos**, con **0% de pérdida de texto o formato** del documento original y permitiendo reintentar la operación.
+
+---
+
+
