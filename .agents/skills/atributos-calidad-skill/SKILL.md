@@ -43,20 +43,20 @@ Cuando toque armar o refinar un requerimiento para dejarlo como un escenario for
 
 **Tips clave para redactar:**
 - La **medida de respuesta** tiene que ser números concretos. Nada de poner "rápido", "seguro" o "fácil de usar".
-- Si dudás con las métricas, podés chusmear valores típicos en `references/sei_qa_templates.md`.
+- Si dudás con las métricas, podés revisar los valores típicos en `references/sei_qa_templates.md`.
 
 ---
 
 ## 2. Diagnóstico de Requerimientos Incompletos
 
-A veces te tiran requerimientos como "el sistema tiene que andar rápido". Ante cosas así, ambiguas o por la mitad, hacemos un diagnóstico rápido y proponemos algo mejor:
+A veces te aparecen requerimientos como "el sistema tiene que andar rápido". Ante cosas así, ambiguas o por la mitad, hacemos un diagnóstico rápido y proponemos algo mejor:
 
 1. **Identificamos el atributo principal** (y aclaramos si nos están pidiendo en realidad una funcionalidad pura o una restricción tecnológica).
 2. **Repasamos las 6 partes del SEI** y vemos cómo venimos:
-   - `[Presente]`: Está clarísimo.
+   - `[Presente]`: Está muy claro.
    - `[Ambiguo]`: Lo menciona pero es medio subjetivo.
    - `[Faltante]`: Ni lo nombra.
-3. **Aplicamos Straw Man (Keeling):** Si falta la métrica o el ambiente, tiramos un número razonable para obligar a los stakeholders a discutir sobre algo concreto.
+3. **Aplicamos Straw Man (Keeling):** Si falta la métrica o el ambiente, sugerimos un número razonable para obligar a los stakeholders a discutir sobre algo concreto.
 4. **Armamos el escenario refinado** usando la plantilla de 6 partes.
 
 ### Formato para el diagnóstico:
@@ -76,10 +76,10 @@ A veces te tiran requerimientos como "el sistema tiene que andar rápido". Ante 
 | **Medida de Respuesta** | [Presente / Ambiguo / Faltante] | [Breve por qué] |
 
 #### Por qué proponemos esto (Straw Man):
-[Breve explicación de los números que nos inventamos para completar lo que faltaba y abrir la charla]
+[Breve explicación de los números que sugerimos para completar lo que faltaba y abrir la charla]
 
 #### Escenario Refinado Final (SEI 6 Partes):
-[Acá va la plantilla de 6 partes ya toda completita]
+[Acá va la plantilla de 6 partes ya toda completa]
 ```
 
 ---
@@ -94,16 +94,16 @@ Cuando estamos viendo un sistema completo y queremos ver la foto grande:
 4. **Nivel 3 (Escenarios):** Colgamos escenarios concretos en las hojas del árbol.
 5. **Priorizamos `(Importancia, Dificultad)`:**
    - Le ponemos `High (H)`, `Medium (M)` o `Low (L)` a ambas cosas: ej. `(H, M)`.
-   - Buscamos desesperadamente los escenarios `(H, H)`. Esos son los **Architectural Drivers** que nos van a dictar cómo diseñar el sistema.
+   - Buscamos en profundidad los escenarios `(H, H)`. Esos son los **Architectural Drivers** que nos van a dictar cómo diseñar el sistema.
 
 ### ¿Cómo lo mostramos?
-- **El Árbol:** Una listita bien indentada o un diagrama en Mermaid.
+- **El Árbol:** Una lista bien indentada o un diagrama en Mermaid.
 - **Tabla de escenarios:** El detalle de cada escenario con su ID, tupla `(Imp, Dif)` y enunciado.
-- **Análisis de los Drivers `(H, H)`:** Una charlita cortita sobre por qué estos escenarios son los que nos van a dar dolores de cabeza o condicionar la arquitectura.
+- **Análisis de los Drivers `(H, H)`:** Un resumen corto sobre por qué estos escenarios son los que nos van a condicionar la arquitectura.
 
 ---
 
 ## Archivos a mano
-- **`references/sei_qa_templates.md`:** Acá tenés un machete con métricas típicas para cada atributo según Bass.
+- **`references/sei_qa_templates.md`:** Acá tenés una guia con métricas típicas para cada atributo según Bass.
 - **`references/utility_tree_guide.md`:** Ejemplos y guías para no trabarte armando el árbol.
 - **`examples/test_cases.md`:** Algunos ejercicios del TP3 ya resueltos para que veas cómo funciona en la práctica.
