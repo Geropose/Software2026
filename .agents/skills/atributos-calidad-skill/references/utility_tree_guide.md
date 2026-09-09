@@ -1,65 +1,64 @@
-# Guía Práctica para el Árbol de Utilidad (Utility Tree)
+# Guía Práctica para armar el Árbol de Utilidad
 
-El **Árbol de Utilidad** es una herramienta utilizada en métodos de arquitectura como QAW y ATAM para aterrizar metas globales de negocio en requerimientos arquitectónicos concretos, medibles y priorizados.
-
----
-
-## 1. Estructura Jerárquica
-
-El árbol descompone la calidad del sistema en 4 niveles de detalle:
-
-1. **Raíz (`Utilidad`):** Representa la bondad y adecuación global del software respecto a los objetivos de negocio.
-2. **Atributos de Calidad:** Las dimensiones de calidad principales que condicionan la solución (Rendimiento, Disponibilidad, Seguridad, Usabilidad, Interoperabilidad, Modificabilidad). Se suelen elegir entre 4 y 6 según el problema.
-3. **Sub-factores / Categorías:** Desglose del atributo en áreas específicas. Por ejemplo:
-   - Rendimiento: *Latencia en búsquedas*, *Throughput en horas pico*.
-   - Seguridad: *Autenticación y autorización*, *Integridad en pagos*.
-   - Disponibilidad: *Resiliencia ante pérdida de señal*, *Failover de servidores*.
-4. **Escenarios concretos (Hojas):** La definición final de cada requerimiento con una métrica verificable (resumen del escenario SEI de 6 partes).
+El **Árbol de Utilidad** es básicamente la forma que tenemos en arquitectura (basado en métodos como ATAM) para aterrizar esas metas de negocio súper amplias en requerimientos técnicos concretos y, sobre todo, priorizados. 
 
 ---
 
-## 2. Esquema Visual
+## 1. ¿Cómo se estructura?
+
+El árbol va desarmando la "calidad" del sistema en 4 niveles de zoom:
+
+1. **Raíz (`Utilidad`):** El propósito general del sistema, lo que el negocio quiere lograr.
+2. **Atributos de Calidad:** Las ramas principales. Elegimos los 4 a 6 atributos que realmente van a mover la aguja (Rendimiento, Seguridad, Disponibilidad, etc.).
+3. **Sub-factores:** Partimos cada atributo en partes más manejables. Ejemplos:
+   - En Rendimiento: Tiempos de búsqueda vs. Bancarse la hora pico.
+   - En Disponibilidad: Qué pasa si se cae internet vs. Si se quema un server.
+4. **Escenarios (Las Hojas):** Acá va el requerimiento crudo y duro. Un resumen claro del escenario de 6 partes del SEI, con su métrica concreta.
+
+---
+
+## 2. Así se ve un árbol en la práctica
 
 ```text
 Utilidad
 ├── Rendimiento
-│   ├── Latencia de activación ─────── (H, H) [Driver] -> Escenario 1
-│   └── Consulta de mapa ───────────── (H, M)           -> Escenario 2
+│   ├── Latencia para arrancar ─────── (H, H) [Driver] -> Escenario 1
+│   └── Cargar el mapa de inicio ───── (H, M)           -> Escenario 2
 ├── Disponibilidad
-│   ├── Pérdida de enlace GPS ──────── (H, H) [Driver] -> Escenario 3
-│   └── Recuperación ante caída ────── (H, M)           -> Escenario 4
+│   ├── Si se corta el 4G ──────────── (H, H) [Driver] -> Escenario 3
+│   └── Si se nos cae el backend ───── (H, M)           -> Escenario 4
 ├── Seguridad
-│   ├── Transacciones de pago ──────── (H, H) [Driver] -> Escenario 5
-│   └── Control de accesos admin ───── (M, L)           -> Escenario 6
+│   ├── Proteger la tarjeta/pago ───── (H, H) [Driver] -> Escenario 5
+│   └── Panel de admin interno ─────── (M, L)           -> Escenario 6
 └── Usabilidad
-    ├── Finalización de viaje ──────── (H, M)           -> Escenario 7
-    └── Alerta de pausa de viaje ───── (M, L)           -> Escenario 8
+    ├── Poder terminar un viaje ────── (H, M)           -> Escenario 7
+    └── Avisar que está en pausa ───── (M, L)           -> Escenario 8
 ```
 
 ---
 
-## 3. Matriz de Priorización `(Importancia, Dificultad)`
+## 3. Priorizando: El juego de `(Importancia, Dificultad)`
 
-A cada escenario se le asigna una tupla `(Imp, Dif)` con valores en la escala **High (H)**, **Medium (M)** o **Low (L)**:
+A cada escenario en la hoja le colgamos una etiqueta doble `(Imp, Dif)` usando `High (H)`, `Medium (M)` o `Low (L)`:
 
-- **Importancia para el Negocio (Primer valor):** ¿Qué tan crítico es este requerimiento para los clientes, usuarios y objetivos del producto? Evaluado típicamente junto a los stakeholders del negocio.
-- **Dificultad Técnica / Riesgo Arquitectónico (Segundo valor):** ¿Qué tan complejo, riesgoso o costoso es para el equipo de desarrollo lograr una arquitectura que garantice este escenario? Evaluado por los arquitectos y desarrolladores.
+- **Importancia para el Negocio (1er valor):** ¿Qué tan grave es si esto falla? Acá mandan los clientes y el negocio. 
+- **Dificultad Técnica / Riesgo (2do valor):** ¿Qué tan complicado es para los devs programar y mantener esto? Acá mandan los arquitectos y el equipo técnico.
 
-### Clasificación y foco:
+### ¿Dónde poner el ojo?
 
-| Prioridad | Impacto en el Diseño |
+| Prioridad | Qué significa para la arquitectura |
 | :---: | :--- |
-| **(H, H)** | **Architectural Drivers Primarios.** Son el núcleo del diseño; justifican las principales decisiones estructurales, selección de patrones y tácticas. |
-| **(H, M) / (M, H)** | **Prioridad Secundaria.** Requerimientos importantes que deben contemplarse en las primeras iteraciones de diseño. |
-| **(H, L) / (M, M)** | **Prioridad Media.** Se resuelven habitualmente con soluciones estándar de librerías o frameworks. |
-| **(L, M) / (L, L)** | **Baja prioridad.** No deben influir en decisiones de diseño globales ni justificar complejidad extra. |
+| **(H, H)** | **Muy Importantes Son los Architectural Drivers.** Estos escenarios son los que te van a obligar a elegir un patrón de diseño pesado, cambiar la base de datos o comprar más infraestructura. Son el corazón del diseño. |
+| **(H, M) / (M, H)** | **Importantes pero manejables.** Hay que tenerlos muy en cuenta para los primeros sprints, pero capaz se resuelven sin inventar la rueda. |
+| **(H, L) / (M, M)** | **Media tabla.** Suelen salir fácil usando frameworks modernos, librerías estándar o buenas prácticas básicas. |
+| **(L, M) / (L, L)** | **Para el fondo del backlog.** No te compliques la vida diseñando para esto. |
 
 ---
 
-## 4. Formato de Presentación en Informes
+## 4. ¿Cómo lo entregamos en los TP?
 
-En las entregas y documentación técnica de la materia se recomienda presentar:
+Para los trabajos de la materia, te recomiendo este formato:
 
-1. **Diagrama o esquema del árbol:** Jerarquía clara que muestre las ramas y la tupla de prioridad en cada hoja.
-2. **Tabla resumen de escenarios:** Listado con ID, Atributo, Sub-factor, Prioridad `(Imp, Dif)` y el enunciado concreto del escenario con su métrica medible.
-3. **Justificación de los drivers `(H, H)`:** Párrafo explicativo que detalle qué implicancias técnicas tienen los escenarios de máxima prioridad sobre la arquitectura elegida.
+1. **El dibujito del árbol:** Hacé la estructura jerárquica para que se vea rápido qué elegiste.
+2. **La tabla de verdad:** Armá una tablita enumerando cada escenario (ej. E-01), su atributo, prioridad y el texto del requerimiento bien medible.
+3. **El porqué de los Drivers `(H, H)`:** Escribí un parrafito explicando por qué elegiste esos (H, H) como los más críticos y qué decisiones técnicas difíciles te van a obligar a tomar.
