@@ -32,3 +32,34 @@ Un escenario de calidad según el SEI formaliza un requerimiento no funcional en
   - Tiempo de recuperación (MTTR < 30 s).
   - Tiempo de detección de falla (< 5 s).
   - Margen de pérdida de datos (RPO = 0, no perder transacciones confirmadas).
+ 
+
+### 4. Seguridad (Security)
+*Foco: Proteger los datos y servicios frente a accesos maliciosos o no autorizados, garantizando confidencialidad, integridad y trazabilidad.*
+
+- **Fuentes:** Atacante externo, usuario sin privilegios que intenta escalar permisos, script malicioso.
+- **Estímulos:** Intentos repetidos de autenticación, inyección de parámetros, manipulación de peticiones de cobro, intercepción de tráfico.
+- **Artefactos:** Servicio de autenticación/autorización, endpoints de API pública, base de datos de usuarios, logs de auditoría.
+- **Ambientes:** Red pública/Internet, operación habitual bajo monitoreo.
+- **Respuestas:** Bloqueo de solicitudes no autenticadas, registro del evento en log inmutable, revocación de tokens sospechosos, cifrado de información sensible (AES-256 / TLS 1.3).
+- **Medidas de respuesta:**
+  - 100% de peticiones sin token o con firma adulterada rechazadas.
+  - Bloqueo de IP de origen tras 5 intentos fallidos consecutivos en menos de 1 minuto.
+  - Generación de alerta al administrador en menos de 30 segundos.
+
+---
+
+### 5. Usabilidad (Usability)
+*Foco: Facilitar el uso y comprensión del sistema por parte del usuario final, reduciendo la curva de aprendizaje y los errores operativos.*
+
+- **Fuentes:** Usuario nuevo, usuario de tercera edad o con dificultades motrices/visuales, operador técnico.
+- **Estímulos:** El usuario realiza una transacción habitual (alquilar monopatín, extraer dinero, pausar viaje), o comete un error al interactuar con la pantalla.
+- **Artefactos:** Interfaz gráfica móvil/web, mensajes de feedback, pantalla de confirmación, flujo de cancelación.
+- **Ambientes:** Uso en la vía pública (luz solar directa, apuro), primer uso sin capacitación previa.
+- **Respuestas:** Presentación de elementos claros con tipografía visible y alto contraste, confirmaciones explícitas antes de acciones con costo, mensajes de error claros con opción de deshacer.
+- **Medidas de respuesta:**
+  - Tiempo para completar la tarea principal (< 60 a 90 segundos en el 90% de los usuarios).
+  - Tasa de finalización exitosa sin asistencia externa (> 95%).
+  - Tasa de clics o transacciones erróneas (< 3%).
+
+---
