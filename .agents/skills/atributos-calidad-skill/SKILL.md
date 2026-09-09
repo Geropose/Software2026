@@ -46,7 +46,6 @@ Cuando se pida formular o refinar un requerimiento de calidad en un escenario fo
 - Se pueden consultar valores y métricas de referencia en `references/sei_qa_templates.md`.
 
 ---
----
 
 ## Modo 2: Chequeo, Diagnóstico y Completitud de Escenarios
 
