@@ -46,7 +46,45 @@ Cuando se pida formular o refinar un requerimiento de calidad en un escenario fo
 - Se pueden consultar valores y métricas de referencia en `references/sei_qa_templates.md`.
 
 ---
+---
 
+## Modo 2: Chequeo, Diagnóstico y Completitud de Escenarios
+
+Cuando se provea un requerimiento informal o un escenario preliminar ("crudo" / *raw scenario*), la skill debe ejecutar un diagnóstico de completitud y proponer el escenario completado.
+
+### Proceso de Evaluación en 4 Pasos:
+1. **Identificación del Atributo de Calidad principal:** Clasificar a qué atributo pertenece (o si es un requerimiento funcional puro o una restricción de diseño).
+2. **Matriz de Chequeo de las 6 Partes:** Evaluar elemento por elemento con estado:
+   - ✅ **Presente y claro**
+   - ⚠️ **Ambiguo o incompleto**
+   - ❌ **Faltante / Ausente**
+3. **Detección de Ambigüedades y Aplicación de *Straw Man*:** Si la medida de respuesta falta o es subjetiva (ej. "el sistema debe ser rápido"), proponer una medida concreta inicial basada en *Straw Man Response Measure* (Michael Keeling) para abrir la discusión técnica.
+4. **Escenario Completo Refinado:** Presentar la versión final completa en el template de 6 partes.
+
+### Formato de Salida para Chequeo:
+
+```markdown
+### Diagnóstico de Escenario
+- **Enunciado Original:** "[Texto provisto]"
+- **Atributo Identificado:** [Nombre del atributo]
+
+| Elemento SEI | Estado | Valor Detectado / Observación |
+| :--- | :---: | :--- |
+| **1. Fuente** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
+| **2. Estímulo** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
+| **3. Artefacto** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
+| **4. Ambiente** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
+| **5. Respuesta** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
+| **6. Medida de Respuesta** | [✅ / ⚠️ / ❌] | [Texto extraído o indicación de ausencia] |
+
+#### Partes Faltantes y Recomendación de Refinamiento:
+- [Explicación de qué falta y justificación de las asunciones/straw man propuestos]
+
+#### Escenario Completado (SEI 6 Partes):
+[Presentar el template completo con las 6 partes rellenas]
+```
+
+---
 
 ## Modo 3: Árbol de Utilidad (Utility Tree) y Priorización
 
