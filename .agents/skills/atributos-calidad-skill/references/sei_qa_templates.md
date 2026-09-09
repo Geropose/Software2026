@@ -63,3 +63,30 @@ Un escenario de calidad según el SEI formaliza un requerimiento no funcional en
   - Tasa de clics o transacciones erróneas (< 3%).
 
 ---
+
+### 6. Interoperabilidad (Interoperability)
+*Foco: Capacidad de intercambiar información estructurada con sistemas externos de forma predecible y consistente.*
+
+- **Fuentes:** Plataformas de pago (Mercado Pago), servicios de mapas (OpenStreetMap / Google Maps), hardware IoT (módulos GPS).
+- **Estímulos:** Webhook de notificación de cobro, invocación de API REST, recepción de mensajes de telemetría vía MQTT.
+- **Artefactos:** Adaptadores de integración, servicios de mensajería, transformadores de datos (JSON/Protobuf).
+- **Ambientes:** Conectividad de red estándar, posibles demoras o timeouts en el servicio externo.
+- **Respuestas:** Parseo y validación sintáctica del payload, traducción al modelo de dominio interno, envío de acuse de recibo HTTP 200/204.
+- **Medidas de respuesta:**
+  - Procesamiento del webhook y confirmación en menos de 500 ms.
+  - 99.9% de mensajes con formato correcto procesados sin error.
+  - Tiempo de desarrollo para integrar un proveedor alternativo (< 3 días-persona).
+
+---
+
+### 7. Escalabilidad (Scalability)
+*Foco: Habilidad del sistema para absorber aumentos importantes de volumen de datos o usuarios sin rediseño estructural.*
+
+- **Fuentes:** Crecimiento de flota de dispositivos, lanzamiento comercial del producto, picos estacionales de demanda.
+- **Estímulos:** Incremento del tráfico o número de monopatines activos en un factor de 5x o 10x.
+- **Artefactos:** Capa de servidores backend, balanceadores de carga, clúster de base de datos.
+- **Ambientes:** Crecimiento sostenido durante meses o eventos promocionales puntuales.
+- **Respuestas:** Despliegue de réplicas adicionales (escalado horizontal), reparto equilibrado de conexiones.
+- **Medidas de respuesta:**
+  - Variación de latencia promedio inferior al 15% al duplicar la carga.
+  - Capacidad de sumar nodos en menos de 3 minutos.
